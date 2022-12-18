@@ -12,6 +12,13 @@
   <p>
     <span id="error"></span>
   </p>
+  <section id="uploadCat">
+    <h2>Upload your cat photo</h2>
+    <form id="uploadingForm">
+      <input type="file" id="file" name="file" required>
+      <button type="button" onclick="uploadCatPhoto()">Upload</button>
+    </form>
+  </section>
   <section id="ramdomCats">
     <h1>Random cats</h1>
     <article>
@@ -20,9 +27,10 @@
     </article>
     <input type="button" value="Raffle" id="btnRaffle">
   </section>
-  
-  <section id="favoritesCatsContainer">
-    <h1>Favorite cats</h1>
-  </section>
-</body>
+
+  <h2>Favorite cats</h2>
+  <section id="favoritesCatsContainer"></section>
+  <h2>Your cats photos</h1>
+  <section id="uploadedCats"></section>
+  </body>
 </html>
