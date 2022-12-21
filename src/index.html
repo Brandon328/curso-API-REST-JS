@@ -5,11 +5,69 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Tajawal:wght@300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="main.js" defer></script>
-  <title>Cat Sun</title>
+  <!-- <script src="main.js" defer></script> -->
+  <title>Moon Cat</title>
 </head>
 <body>
-  
+  <header class="random-cat-section">
+    <h1>Random cats</h1>
+    <img src="assets/samplecat1.jpg" alt="like icon" id="randomCat">
+    <img src="assets/unlike.png" alt="like icon" id="like">
+    <button type="button" id="btnRaffle">
+      <span>Raffle</span>
+      <img src="assets/paw-black.png" alt="paw">
+    </button>
+  </header>
+  <nav>
+    <ul>
+      <li id="btnMyFavoriteCats" class="active-section">
+        <span>My favorite cats</span>
+      </li>
+      <li>
+        <img src="assets/black-evil-cat.png" alt="Black devil cat">
+      </li>
+      <li id="btnMyCats">
+        <span>My cats</span>
+      </li>
+    </ul>
+  </nav>
+  <main class="cards-section">
+    <p id="info-box" class="card success inactive">
+      Success! Your cat image was uploaded.
+    </p>
+    <article class="card inactive">
+      <img src="assets/treats.png" alt="paws">
+      <p>No favorite cats yet</p>
+    </article>
+    <form id="uploading-form" class="card inactive">
+      <img class="" src="assets/witch-cat.png" alt="witch cat">
+      <img class="cat-image-demo inactive" src="assets/samplecat2.jpg" alt="witch cat">
+      <label for="btn-file" class="btn-choose-img">
+        <span>Choose an image</span>
+        <img src="assets/upload-black.png" alt="upload icon" class="upload-icon inactive">
+      </label>
+      <input id="btn-file" type="file" accept=".png,.jpeg,.jpg" class="inactive">
+    </form>
+    <section class="my-favorite-cats-section">
+      <article class="card">
+        <img src="assets/samplecat3.jpg" class="cat-image" alt="cat image">
+        <img src="assets/like.png" alt="like icon" class="unlike">
+      </article>
+    </section>
+    <section class="my-cats-section">
+      <article class="card">
+        <img src="assets/samplecat3.jpg" class="cat-image" alt="cat image">
+        <img src="assets/like.png" alt="like icon" class="unlike">
+      </article>
+    </section>
+  </main>
+  <footer>
+    <img src="assets/mooncat.png" alt="moon cat">
+    <span>Made with ♥ by <a href="https://www.brandonjj.com">@BrandonJJ328</a></span>
+  </footer>
 </body>
 </html>
