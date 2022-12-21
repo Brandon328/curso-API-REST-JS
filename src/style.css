@@ -137,7 +137,7 @@ nav ul img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 0;
+  padding: 8px 15px;
   cursor: pointer;
 }
 
@@ -201,7 +201,7 @@ nav ul img {
 
 .cards-section section .card {
   padding: 0;
-  max-width: 400px;
+  max-width: 350px;
 }
 
 .cards-section section .card .unlike {
@@ -240,4 +240,55 @@ footer img {
 footer a {
   text-decoration: none;
   color: white;
+}
+
+
+/* ************** RESPONSIVE DESIGN */
+@media (min-width: 900px) {
+  body {
+    display: grid;
+    grid-template-rows: 92.5vh 5vh;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  main {
+    overflow-y: scroll;
+    max-height: 100vh;
+  }
+
+  #randomCat {
+    max-height: 100vh;
+  }
+
+  .random-cat-section {
+    margin: 0;
+  }
+
+  footer {
+    grid-column: 1 / 3;
+    margin: 0;
+  }
+
+  .cards-section section .card {
+    margin: 10px 15px;
+  }
+
+  nav ul img {
+    width: 80px;
+    margin: 0 30px;
+  }
+}
+
+@media (min-width: 1100px) {
+
+  #btnMyFavoriteCats,
+  #btnMyCats {
+    height: auto;
+  }
+}
+
+@media (max-width: 400px) {
+  nav ul img {
+    display: none;
+  }
 }
