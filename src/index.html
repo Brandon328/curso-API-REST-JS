@@ -37,21 +37,21 @@
       </ul>
     </nav>
     <p id="info-box" class="card inactive"></p>
-    <article class="card inactive">
+    <form id="form-data" class="inactive">
+      <input id="btn-file" name="file" type="file" accept=".png,.jpeg,.jpg" class="inactive">
+    </form>
+    <div class="card uploading-form inactive" id="uploading-form">
+      <img class="img-witch-cat" src="assets/witch-cat.png" alt="witch cat">
+      <label for="btn-file" class="btn-choose-img">
+        <span>Choose an image</span>
+      </label>
+    </div>
+    <article id="no-cats-card" class="card inactive">
       <img src="assets/treats.png" alt="paws">
-      <p>No favorite cats yet</p>
+      <p>No cats yet</p>
     </article>
     <section class="my-favorite-cats-section"></section>
     <section class="my-cats-section inactive">
-      <form id="form-data" class="inactive">
-        <input id="btn-file" name="file" type="file" accept=".png,.jpeg,.jpg" class="inactive">
-      </form>
-      <div class="card uploading-form" id="uploading-form">
-        <img class="img-witch-cat" src="assets/witch-cat.png" alt="witch cat">
-        <label for="btn-file" class="btn-choose-img">
-          <span>Choose an image</span>
-        </label>
-      </div>
       <section class="my-cats-cards-section"></section>
     </section>
   </main>

@@ -41,6 +41,11 @@ body {
 }
 
 /* *************** HEADER */
+.cards-section #no-cats-card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .random-cat-section {
   position: relative;
   display: flex;
@@ -229,9 +234,9 @@ nav ul img {
   margin-block-start: 30px;
 }
 
-.my-cats-section #uploading-form {
+#uploading-form {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 0 auto 30px;
 }
 
 /* ****************FOOTER */

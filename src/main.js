@@ -9,6 +9,7 @@ const btn_my_favorite_cats = document.getElementById('btn-my-favorite-cats');
 const btn_my_cats = document.getElementById('btn-my-cats');
 const uploading_form = document.getElementById('uploading-form');
 const btn_file = document.getElementById('btn-file');
+const no_cats_card = document.getElementById('no-cats-card');
 
 const API_RANDOM = 'https://api.thecatapi.com/v1/images/search';
 const API_FAVORITES = 'https://api.thecatapi.com/v1/favourites';
@@ -58,6 +59,7 @@ async function loadFavouritesCats() {
     `;
   });
   favorites_cats_section.insertAdjacentHTML('beforeend', nodes);
+  noCats(favorites_cats_section);
 }
 
 async function saveFavoriteCat(id, url) {
@@ -82,7 +84,7 @@ async function saveFavoriteCat(id, url) {
     </article>
   `);
   btn_like.src = 'assets/like.png';
-  btn_my_favorite_cats.click();
+  noCats(favorites_cats_section);
 }
 
 async function ridFavoriteCat(event, id) {
@@ -95,6 +97,7 @@ async function ridFavoriteCat(event, id) {
   }
   await fetchData(`${API_FAVORITES}/${id}`, options);
   favorites_cats_section.removeChild(event.target.parentNode);
+  noCats(favorites_cats_section);
 }
 
 async function uploadCatPhoto() {
@@ -112,6 +115,7 @@ async function uploadCatPhoto() {
 
   new_card.appendChild(img_cat);
   cats_card_section.insertAdjacentElement('afterbegin', new_card);
+  noCats(cats_card_section);
 
   const form_data_html = document.getElementById('form-data');
   const form_data = new FormData(form_data_html);
@@ -146,6 +150,7 @@ async function ridUploadedCat(event) {
   }
   await fetch(`${API_UPLOAD}/${id}`, options);
   cats_card_section.removeChild(event.target.parentNode);
+  noCats(cats_card_section);
 }
 
 async function loadUploadedCats() {
@@ -162,18 +167,27 @@ async function loadUploadedCats() {
   cats_card_section.insertAdjacentHTML('afterbegin', nodes);
 }
 
+function noCats(section) {
+  if (section.childElementCount == 0) no_cats_card.classList.remove('inactive');
+  else no_cats_card.classList.add('inactive');
+}
+
 btn_raffle.addEventListener('click', loadRandomCats);
 btn_my_favorite_cats.addEventListener('click', () => {
   btn_my_favorite_cats.classList.add('active-section');
   btn_my_cats.classList.remove('active-section');
   favorites_cats_section.classList.remove('inactive');
   cats_section.classList.add('inactive');
+  uploading_form.classList.add('inactive');
+  noCats(favorites_cats_section);
 })
 btn_my_cats.addEventListener('click', () => {
   btn_my_cats.classList.add('active-section');
   btn_my_favorite_cats.classList.remove('active-section');
   cats_section.classList.remove('inactive');
   favorites_cats_section.classList.add('inactive');
+  uploading_form.classList.remove('inactive');
+  noCats(cats_card_section);
 })
 btn_file.addEventListener('change', () => {
   if (btn_file.files.length != 0) {
