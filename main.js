@@ -22,9 +22,21 @@ async function fetchData(urlApi, options = {
     'x-api-key': API_KEY,
   }
 }) {
+  let counter = 0;
+  let response;
+  let data;
+  info_box.classList.add('inactive');
   try {
-    const response = await fetch(urlApi, options);
-    const data = await response.json();
+    while (counter < 3) {
+      try {
+        response = await fetch(urlApi, options);
+        data = await response.json();
+        break;
+      }
+      catch {
+        counter++;
+      }
+    }
     if (response.status < 200 || response.status > 300) {
       info_box.innerText = `Hubo un error ${response.status}. ${data.message}`;
       info_box.classList.add('error');
@@ -127,7 +139,6 @@ async function uploadCatPhoto() {
     body: form_data
   }
   const response = await fetchData(`${API_UPLOAD}/upload`, options);
-  console.log('Foto subida');
   img_cat.src = response.url;
   new_card.appendChild(btn_unlike_cat);
   cats_card_section.insertAdjacentElement('afterbegin', new_card);
