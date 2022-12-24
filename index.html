@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Tajawal:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <title>Moon Cat</title>
+</head>
+<body>
+  <header class="random-cat-section">
+    <h1>Random cats</h1>
+    <img src="assets/loading.gif" alt="like icon" id="random-cat">
+    <img src="assets/unlike.png" alt="like icon" id="btn-like">
+    <button type="button" id="btn-raffle">
+      <span>Raffle</span>
+      <img src="assets/paw-black.png" alt="paw">
+    </button>
+  </header>
+  <main class="cards-section">
+    <nav>
+      <ul>
+        <li id="btn-my-favorite-cats" class="active-section">
+          <span>My favorite cats</span>
+        </li>
+        <li>
+          <img src="assets/black-evil-cat.png" alt="Black devil cat">
+        </li>
+        <li id="btn-my-cats">
+          <span>My cats</span>
+        </li>
+      </ul>
+    </nav>
+    <p id="info-box" class="card inactive"></p>
+    <form id="form-data" class="inactive">
+      <input id="btn-file" name="file" type="file" accept=".png,.jpeg,.jpg" class="inactive">
+    </form>
+    <div class="card uploading-form inactive" id="uploading-form">
+      <img class="img-witch-cat" src="assets/witch-cat.png" alt="witch cat">
+      <label for="btn-file" class="btn-choose-img">
+        <span>Choose an image</span>
+      </label>
+    </div>
+    <article id="no-cats-card" class="card inactive">
+      <img src="assets/treats.png" alt="paws">
+      <p>No cats yet</p>
+    </article>
+    <section class="my-favorite-cats-section"></section>
+    <section class="my-cats-section inactive">
+      <section class="my-cats-cards-section"></section>
+    </section>
+  </main>
+  <footer>
+    <img src="assets/mooncat.png" alt="moon cat">
+    <span>Made with ♥ by <a href="https://www.brandonjj.com">@BrandonJJ328</a></span>
+  </footer>
+</body>
+</html>
