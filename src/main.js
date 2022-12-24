@@ -1,8 +1,14 @@
-const btn_sort = document.getElementById('btnRaffle');
-const btn_add_favourite = document.getElementById('saveCat');
-const img = document.getElementById('randomCat');
-const favorites_cats_container = document.getElementById('favoritesCatsContainer');
-const error_popup = document.getElementById('error');
+const btn_raffle = document.getElementById('btn-raffle');
+const img_random_cat = document.getElementById('random-cat');
+const btn_like = document.getElementById('btn-like');
+const favorites_cats_section = document.querySelector('.my-favorite-cats-section');
+const cats_section = document.querySelector('.my-cats-section');
+const cats_card_section = document.querySelector('.my-cats-cards-section');
+const info_box = document.getElementById('info-box');
+const btn_my_favorite_cats = document.getElementById('btn-my-favorite-cats');
+const btn_my_cats = document.getElementById('btn-my-cats');
+const uploading_form = document.getElementById('uploading-form');
+const btn_file = document.getElementById('btn-file');
 
 const API_RANDOM = 'https://api.thecatapi.com/v1/images/search';
 const API_FAVORITES = 'https://api.thecatapi.com/v1/favourites';
@@ -15,20 +21,29 @@ async function fetchData(urlApi, options = {
     'x-api-key': API_KEY,
   }
 }) {
-
-  const response = await fetch(urlApi, options);
-  const data = await response.json();
-  if (response.status < 200 || response.status > 300) {
-    error_popup.innerText = `Hubo un error ${response.status}. ${data.message}`;
+  try {
+    const response = await fetch(urlApi, options);
+    const data = await response.json();
+    if (response.status < 200 || response.status > 300) {
+      info_box.innerText = `Hubo un error ${response.status}. ${data.message}`;
+      info_box.classList.add('error');
+      info_box.classList.remove('inactive');
+    }
+    return data;
   }
-  return data;
+  catch (error) {
+    info_box.innerText = `Hubo un error ${error}.`;
+    info_box.classList.add('error');
+    info_box.classList.remove('inactive');
+  }
 }
 
 async function loadRandomCats() {
-  img.src = 'https://i.stack.imgur.com/IA7jp.gif';
+  btn_like.src = 'assets/unlike.png';
+  img_random_cat.src = 'assets/loading.gif';
   const data = await fetchData(API_RANDOM);
-  img.src = data[0].url;
-  btn_add_favourite.onclick = () => saveFavoriteCat(data[0].id, data[0].url);
+  img_random_cat.src = data[0].url;
+  btn_like.onclick = () => saveFavoriteCat(data[0].id, data[0].url);
 };
 
 async function loadFavouritesCats() {
@@ -36,16 +51,17 @@ async function loadFavouritesCats() {
   const data = await fetchData(`${API_FAVORITES}?order=DESC`);
   data.forEach(cat => {
     nodes += `
-      <article>
-        <img src="${cat.image.url}" alt="favorite cat image" width="300px">
-        <input type="button" value="Get this cat photo off my favorite list" onclick="ridFavoriteCat(event, ${cat.id})">
+      <article class="card">
+        <img src="${cat.image.url}" class="cat-image" alt="cat image">
+        <img src="assets/like.png" alt="like icon" class="unlike" onclick="ridFavoriteCat(event, ${cat.id})">
       </article>
     `;
   });
-  favorites_cats_container.insertAdjacentHTML('beforeend', nodes);
+  favorites_cats_section.insertAdjacentHTML('beforeend', nodes);
 }
 
 async function saveFavoriteCat(id, url) {
+  btn_like.src = 'assets/loading.gif';
   const image_id = id;
   const content = {
     'image_id': image_id,
@@ -59,16 +75,18 @@ async function saveFavoriteCat(id, url) {
     body: JSON.stringify(content)
   }
   const response = await fetchData(API_FAVORITES, options);
-  console.log(response);
-  favorites_cats_container.insertAdjacentHTML('afterbegin', `
-    <article>
-      <img src="${url}" alt="favorite cat image" width="300px">
-      <input type="button" value="Get this cat photo off my favorite list" onclick="ridFavoriteCat(event, ${response.id})">
+  favorites_cats_section.insertAdjacentHTML('afterbegin', `
+    <article class="card">
+      <img src="${url}" class="cat-image" alt="cat image">
+      <img src="assets/like.png" alt="like icon" class="unlike" onclick="ridFavoriteCat(event, ${response.id})">
     </article>
   `);
+  btn_like.src = 'assets/like.png';
+  btn_my_favorite_cats.click();
 }
 
 async function ridFavoriteCat(event, id) {
+  event.target.src = 'assets/loading.gif';
   const options = {
     method: 'DELETE',
     headers: {
@@ -76,32 +94,49 @@ async function ridFavoriteCat(event, id) {
     }
   }
   await fetchData(`${API_FAVORITES}/${id}`, options);
-  favorites_cats_container.removeChild(event.target.parentNode);
+  favorites_cats_section.removeChild(event.target.parentNode);
 }
 
 async function uploadCatPhoto() {
-  const form = document.getElementById('uploadingForm');
-  const formData = new FormData(form);
+  const new_card = document.createElement('article');
+  new_card.classList.add('card');
+  const img_cat = document.createElement('img');
+  img_cat.src = 'assets/loading.gif';
+  img_cat.classList.add('cat-image');
+  img_cat.alt = 'cat image';
+  const btn_unlike_cat = document.createElement('img');
+  btn_unlike_cat.src = 'assets/like.png';
+  btn_unlike_cat.alt = 'like icon';
+  btn_unlike_cat.classList.add('unlike');
+  btn_unlike_cat.onclick = () => ridUploadedCat;
+
+  new_card.appendChild(img_cat);
+  cats_card_section.insertAdjacentElement('afterbegin', new_card);
+
+  const form_data_html = document.getElementById('form-data');
+  const form_data = new FormData(form_data_html);
   const options = {
     method: 'POST',
     headers: {
       'x-api-key': API_KEY,
     },
-    body: formData
+    body: form_data
   }
   const response = await fetchData(`${API_UPLOAD}/upload`, options);
   console.log('Foto subida');
-  const section = document.getElementById('uploadedCats');
-  section.insertAdjacentHTML('afterbegin', `
-    <article>
-      <img src="${response.url}" alt="favorite cat image" width="300px">
-      <input type="button" value="Get this cat photo off my favorite list" onclick="ridUploadedCat(event)" data-id=${response.id}>
-    </article>
-  `);
+  img_cat.src = response.url;
+  new_card.appendChild(btn_unlike_cat);
+  cats_card_section.insertAdjacentElement('afterbegin', new_card);
+  uploading_form.innerHTML = `
+    <img class="img-witch-cat" src="assets/witch-cat.png" alt="witch cat">
+    <label for="btn-file" class="btn-choose-img">
+      <span>Choose an image</span>
+    </label>
+  `;
 }
 
 async function ridUploadedCat(event) {
-  const section = document.getElementById('uploadedCats');
+  event.target.src = 'assets/loading.gif';
   const id = event.target.getAttribute('data-id');
   const options = {
     method: 'DELETE',
@@ -110,26 +145,48 @@ async function ridUploadedCat(event) {
     }
   }
   await fetch(`${API_UPLOAD}/${id}`, options);
-  section.removeChild(event.target.parentNode);
+  cats_card_section.removeChild(event.target.parentNode);
 }
 
 async function loadUploadedCats() {
-  const section = document.getElementById('uploadedCats');
   const response = await fetchData(`${API_UPLOAD}?limit=10`);
   let nodes = '';
   response.forEach(cat => {
     nodes += `
-      <article>
-        <img src="${cat.url}" alt="favorite cat image" width="300px">
-        <input type="button" value="Get this cat photo off my favorite list" onclick="ridUploadedCat(event)" data-id=${cat.id}>
+      <article class="card">
+        <img src="${cat.url}" class="cat-image" alt="cat image">
+        <img src="assets/like.png" alt="like icon" class="unlike" onclick="ridUploadedCat(event)" data-id=${cat.id}>
       </article>
     `;
   });
-  section.insertAdjacentHTML('afterbegin', nodes);
+  cats_card_section.insertAdjacentHTML('afterbegin', nodes);
 }
 
-btn_sort.addEventListener('click', loadRandomCats);
+btn_raffle.addEventListener('click', loadRandomCats);
+btn_my_favorite_cats.addEventListener('click', () => {
+  btn_my_favorite_cats.classList.add('active-section');
+  btn_my_cats.classList.remove('active-section');
+  favorites_cats_section.classList.remove('inactive');
+  cats_section.classList.add('inactive');
+})
+btn_my_cats.addEventListener('click', () => {
+  btn_my_cats.classList.add('active-section');
+  btn_my_favorite_cats.classList.remove('active-section');
+  cats_section.classList.remove('inactive');
+  favorites_cats_section.classList.add('inactive');
+})
+btn_file.addEventListener('change', () => {
+  if (btn_file.files.length != 0) {
+    uploading_form.innerHTML = `
+      <img class="cat-image-demo" src="${URL.createObjectURL(btn_file.files[0])}" alt="witch cat">
+      <label class="btn-choose-img" onclick="uploadCatPhoto()">
+        <span>Upload</span>
+        <img src="assets/upload-black.png" alt="upload icon" class="upload-icon">
+      </label>
+    `;
+  }
+});
 
 loadRandomCats();
 loadFavouritesCats();
-loadUploadedCats()
+loadUploadedCats();

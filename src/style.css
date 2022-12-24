@@ -31,12 +31,12 @@ body {
 }
 
 .success {
-  background-color: var(--soft-green);
+  background-color: var(--soft-green) !important;
   color: var(--green);
 }
 
 .error {
-  background-color: var(--soft-red);
+  background-color: var(--soft-red) !important;
   color: var(--red);
 }
 
@@ -49,7 +49,7 @@ body {
   margin-block-end: 30px;
 }
 
-#randomCat {
+#random-cat {
   width: 100%;
   min-height: 400px;
   max-height: 50vh;
@@ -67,7 +67,7 @@ body {
   width: 100%;
 }
 
-#like {
+#btn-like {
   width: 30px;
   position: absolute;
   top: 21px;
@@ -75,11 +75,11 @@ body {
   cursor: pointer;
 }
 
-#like:hover {
+#btn-like:hover {
   content: url('assets/like.png');
 }
 
-#btnRaffle {
+#btn-raffle {
   background-color: white;
   display: flex;
   align-items: center;
@@ -91,22 +91,22 @@ body {
   cursor: pointer;
 }
 
-#btnRaffle:hover {
+#btn-raffle:hover {
   background-color: black;
   color: white;
 }
 
-#btnRaffle:hover img {
+#btn-raffle:hover img {
   content: url('assets/paw-white.png');
 }
 
-#btnRaffle span {
+#btn-raffle span {
   font-family: 'Luckiest Guy', cursive;
   margin-inline-end: 5px;
   font-size: 1rem;
 }
 
-#btnRaffle img {
+#btn-raffle img {
   width: 30px;
 }
 
@@ -129,8 +129,8 @@ nav ul img {
   margin: 0 15px;
 }
 
-#btnMyFavoriteCats,
-#btnMyCats {
+#btn-my-favorite-cats,
+#btn-my-cats {
   text-align: center;
   height: 100%;
   border: 2px solid black;
@@ -141,8 +141,8 @@ nav ul img {
   cursor: pointer;
 }
 
-#btnMyFavoriteCats:hover,
-#btnMyCats:hover,
+#btn-my-favorite-cats:hover,
+#btn-my-cats:hover,
 .active-section {
   background-color: black;
   color: white;
@@ -154,9 +154,6 @@ nav ul img {
   border-radius: 10px;
   margin: 20px 35px;
   padding: 40px;
-}
-
-.cards-section .card {
   background-color: var(--gray);
   font-family: 'Tajawal', sans-serif;
   display: flex;
@@ -193,18 +190,23 @@ nav ul img {
   margin: 0 0 0 10px;
 }
 
-.cards-section section {
+.cards-section .my-favorite-cats-section,
+.cards-section .my-cats-cards-section {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
-.cards-section section .card {
+.cards-section .my-favorite-cats-section .card,
+.cards-section .my-cats-cards-section .card {
   padding: 0;
   max-width: 350px;
+  overflow: hidden;
 }
 
-.cards-section section .card .unlike {
+.cards-section .my-favorite-cats-section .card .unlike,
+.cards-section .my-cats-cards-section .card .unlike {
   position: absolute;
   top: 15px;
   right: 15px;
@@ -212,13 +214,24 @@ nav ul img {
   cursor: pointer;
 }
 
-.cards-section section .card .unlike:hover {
+.cards-section .my-favorite-cats-section .card .unlike:hover,
+.cards-section .my-cats-cards-section .card .unlike:hover {
   content: url('assets/unlike.png');
 }
 
-.cards-section section .card .cat-image {
+.cards-section .my-favorite-cats-section .card .cat-image,
+.cards-section .my-cats-cards-section .card .cat-image {
   width: 100%;
   margin: 0;
+}
+
+.cards-section .my-cats-cards-section {
+  margin-block-start: 30px;
+}
+
+.my-cats-section #uploading-form {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 /* ****************FOOTER */
@@ -256,7 +269,7 @@ footer a {
     max-height: 100vh;
   }
 
-  #randomCat {
+  #random-cat {
     max-height: 100vh;
   }
 
@@ -281,8 +294,8 @@ footer a {
 
 @media (min-width: 1100px) {
 
-  #btnMyFavoriteCats,
-  #btnMyCats {
+  #btn-my-favorite-cats,
+  #btn-my-cats {
     height: auto;
   }
 }
